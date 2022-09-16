@@ -1,0 +1,7 @@
+version: "3"
+services:
+  boilerplate:
+    build: ./
+    container_name: "boilerplate-containerized"
+    ports:
+      - "80:8080"
