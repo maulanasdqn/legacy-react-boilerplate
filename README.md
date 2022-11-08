@@ -21,7 +21,7 @@ Ini adalah Boilerplate React dengan dependencies
 
 - Clone Project ini ( Direkomendasikan menggunakan SSH )
 
-> `git clone git@github.com:maulanasdqn/netflox`
+> `git clone git@github.com:maulanasdqn/react-boilerplate`
 
 ## Install NodeJS dan Yarn
 
