@@ -89,3 +89,33 @@ Untuk bisa menggunakan husky agar berjalan baik dan benar maka perlu di inisiali
 
 - Jalankan perintah
   > `npx husky-init`
+  
+## Running Test, Formatter and Linter
+
+Jika anda mau menjalankan Unit test, format semua dokumen dan menjalankan linting
+
+- Jalnkan perintah ini untuk test sekali jalan
+> `yarn test:run`
+
+- Jalankan perintah ini untuk test dengan watch mode
+> `yarn test`
+
+- Jalankan perintah ini untuk test dengan coverage mode
+> `yarn test:coverage`
+
+- Jalankan perintah ini untuk format seluruh dokumen
+> `yarn format`
+
+- Jalankan perintah ini untuk linting dokumen tanpa fix
+> `yarn lint`
+
+- Jalankan perintah ini untuk lintind dokumen dengan fix
+> `yarn lint:fix`
+
+## Deployment Guide
+
+- Netlify dan Vercel
+Jika anda bermaksud untuk mendeploy nya ke netlify atau vercel anda hanya perlu membinding repository ini ke branch main untuk production dan ke branch dev untuk development
+
+- Vps atau Heroku
+Jika anda bermaksud untuk mendeploy nya ke vps atau heroku anda bisa menggunakan docker container untuk deployment nya karena sudah terintegrasi baik dengan nginx
