@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AuthLayout from "@layouts/Auth";
 import Form from "@modules/Common/Form";
-import { LoginPayload } from "@store/Auth/Login/atoms";
+import { AuthPayload } from "@store/Auth/Common/atoms";
 import { Login } from "@store/Auth/Login/selectors";
 import { URL_PATH } from "@util/constant";
-import { FC, FormEvent, ReactElement, useState } from "react";
+import { FC, FormEvent, ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilCallback, useRecoilState } from "recoil";
 
 const LoginContent: FC = (): ReactElement => {
-  const [payload, setPayload] = useRecoilState(LoginPayload);
+  const [payload, setPayload] = useRecoilState(AuthPayload);
   const [errorMessage, setErrorMessage] = useState("");
 
   const LoginAction = useRecoilCallback(({ snapshot }) => async () => {
@@ -24,6 +24,12 @@ const LoginContent: FC = (): ReactElement => {
     event.preventDefault();
     LoginAction();
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 3000);
+  });
 
   return (
     <AuthLayout error={errorMessage} text="Sign To Your Account">

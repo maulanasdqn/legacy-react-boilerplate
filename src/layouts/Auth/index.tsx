@@ -1,5 +1,5 @@
 import { CommonInterface } from "@util/interfaces/Common";
-import { ReactElement, FC, Suspense } from "react";
+import { ReactElement, FC } from "react";
 
 const AuthLayout: FC<CommonInterface> = ({ children, text, error }): ReactElement => (
   <section className="bg-gray-50 dark:bg-gray-900 h-screen">
@@ -9,11 +9,13 @@ const AuthLayout: FC<CommonInterface> = ({ children, text, error }): ReactElemen
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             {text}
           </h1>
-          <Suspense>
-            <span className="text-md font-bold leading-tight tracking-tight text-red-800 dark:text-white">
-              {error}
-            </span>
-          </Suspense>
+          {error?.length !== 0 && (
+            <div className="flex w-full">
+              <span className="text-md border-2 border-red-700 h-auto w-full p-4 rounded-lg font-bold leading-tight tracking-tight text-red-800 dark:text-white">
+                {error}
+              </span>
+            </div>
+          )}
           {children}
         </div>
       </div>

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AuthLayout from "@layouts/Auth";
 import Form from "@modules/Common/Form";
-import { LoginPayload } from "@store/Auth/Login/atoms";
+import { AuthPayload } from "@store/Auth/Common/atoms";
 import { Register } from "@store/Auth/Register/selectors";
 import { URL_PATH } from "@util/constant";
-import { FC, FormEvent, ReactElement, useState } from "react";
+import { FC, FormEvent, ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilCallback, useRecoilState } from "recoil";
 
 const RegisterContent: FC = (): ReactElement => {
   const navigate = useNavigate();
-  const [payload, setPayload] = useRecoilState(LoginPayload);
+  const [payload, setPayload] = useRecoilState(AuthPayload);
   const [errorMessage, setErrorMessage] = useState("");
 
   const RegisterAction = useRecoilCallback(({ snapshot }) => async () => {
@@ -26,6 +26,12 @@ const RegisterContent: FC = (): ReactElement => {
     event.preventDefault();
     RegisterAction();
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 5000);
+  });
 
   return (
     <AuthLayout error={errorMessage} text="Register Your Account">
