@@ -10,7 +10,7 @@ describe("Check App", () => {
         <App />
       </RecoilRoot>,
     );
-    const text = screen.getByText(/React Boilerplate/i);
+    const text = screen.getByText(/Welcome/i);
     expect(text).toBeDefined;
   });
 });

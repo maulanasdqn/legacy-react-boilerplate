@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TokenService } from "@service/token";
+import TokenService from "@service/Token";
 
 const ApiService = {
   init(baseURL: string) {
@@ -12,22 +12,6 @@ const ApiService = {
 
   removeHeader() {
     axios.defaults.headers.common = {};
-  },
-
-  get(resource: string) {
-    return axios.get(resource);
-  },
-
-  post(resource: string, data: object) {
-    return axios.post(resource, data);
-  },
-
-  put(resource: string, data: object) {
-    return axios.put(resource, data);
-  },
-
-  delete(resource: string) {
-    return axios.delete(resource);
   },
 
   customRequest(data: object) {

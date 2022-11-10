@@ -20,6 +20,7 @@ export default defineConfig({
       "@service": path.resolve(__dirname, "./src/service"),
       "@modules": path.resolve(__dirname, "./src/modules"),
       "@store": path.resolve(__dirname, "./src/store"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
     },
   },
 });

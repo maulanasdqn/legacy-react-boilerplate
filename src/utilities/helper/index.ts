@@ -1,4 +1,4 @@
-import { ErrorComplete, ErrorWithMessage } from "@util/types/error.types";
+import { ErrorComplete, ErrorWithMessage } from "@util/types/Error";
 
 export const setTitle = (title: string): void => {
   document.title = import.meta.env.VITE_APP_TITLE + " | " + title;
@@ -22,11 +22,7 @@ const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
   }
 };
 
-export const getErrorMessage = (error: unknown): string => {
-  return toErrorWithMessage(error).message;
-};
+export const getErrorMessage = (error: unknown): string => toErrorWithMessage(error).message;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const handleError = (error: any): ErrorComplete => {
-  return error.response.data.message;
-};
+export const handleError = (error: any): ErrorComplete => error.response.data.message;

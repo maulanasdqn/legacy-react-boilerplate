@@ -10,7 +10,7 @@
       devShell = pkgs.mkShell {
         nativeBuildInputs = [ pkgs.bashInteractive ];
         buildInputs = with pkgs; [
-          nodejs-16_x
+          nodejs-18_x
           nodePackages.yarn
           nodePackages.prettier
           nodePackages.typescript
