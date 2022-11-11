@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import ApiService from "@service/Api";
 import TokenService from "@service/Token";
 import { AuthPayloadTypes } from "@util/types/Auth";
-import { getErrorMessage } from "@util/helper/index";
+import { getErrorMessage, handleError } from "@util/helper/index";
 
 const AuthService = {
   Login: async (payload: AuthPayloadTypes) => {
@@ -23,8 +22,8 @@ const AuthService = {
       TokenService.saveToken(res.data.access_token);
       TokenService.saveRefreshToken(res.data.refresh_token);
       ApiService.setHeader();
-    } catch (error: any) {
-      throw getErrorMessage(error.response.data);
+    } catch (error) {
+      throw handleError(error);
     }
   },
 
@@ -59,8 +58,8 @@ const AuthService = {
     };
     try {
       await ApiService.customRequest(requestData);
-    } catch (error: any) {
-      throw getErrorMessage(error.response.data);
+    } catch (error) {
+      throw handleError(error);
     }
   },
 };
