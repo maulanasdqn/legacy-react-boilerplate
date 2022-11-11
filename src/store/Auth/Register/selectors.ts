@@ -9,8 +9,7 @@ export const Register = selector({
     const payload = get(AuthPayload);
     try {
       await AuthService.Register(payload);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
+    } catch (e) {
       throw getErrorMessage(e);
     }
   },

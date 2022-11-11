@@ -8,7 +8,7 @@ export const isAuthenticated = atom({
 });
 
 export const AuthPayload = atom<AuthPayloadTypes>({
-  key: "register-credential",
+  key: "auth-credentials",
   default: {
     email: "",
     password: "",

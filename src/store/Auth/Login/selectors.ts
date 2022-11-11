@@ -10,8 +10,7 @@ export const Login = selector({
     try {
       await AuthService.Login(payload);
       window.location.reload();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
+    } catch (e) {
       throw getErrorMessage(e);
     }
   },
