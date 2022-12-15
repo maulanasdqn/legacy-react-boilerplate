@@ -1,47 +1,47 @@
 import { Register } from "@store/Auth/Register/selectors";
 import { URL_PATH } from "@util/constant";
-import { messageParser } from "@util/helper";
 import { useNavigate } from "react-router-dom";
 import { useRecoilCallback } from "recoil";
-import { FC, FormEvent, ReactElement, useEffect, useState, lazy, Suspense } from "react";
-import AuthLayout from "@layouts/Auth";
+import { FC, ReactElement, useEffect, useState, lazy, Suspense, FormEventHandler } from "react";
+import { messageParser } from "@util/helper";
+
+const Form = lazy(() => import("@modules/Common/Form"));
+const AuthCheckBox = lazy(() => import("@modules/Auth/Common/AuthCheckBox"));
+const AuthFooter = lazy(() => import("@modules/Auth/Common/AuthFooter"));
+const RegisterTextField = lazy(() => import("@modules/Auth/Register/RegisterTextField"));
+const AuthLayout = lazy(() => import("@layouts/Auth"));
 
 const RegisterContent: FC = (): ReactElement => {
-  const Form = lazy(() => import("@modules/Common/Form"));
-  const AuthCheckBox = lazy(() => import("@modules/Auth/Common/AuthCheckBox"));
-  const AuthFooter = lazy(() => import("@modules/Auth/Common/AuthFooter"));
-  const RegisterTextField = lazy(() => import("@modules/Auth/Register/RegisterTextField"));
-
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const RegisterAction = useRecoilCallback(({ snapshot }) => async () => {
-    try {
-      await snapshot.getPromise(Register);
-      navigate(URL_PATH.LOGIN, { replace: true });
-    } catch (e) {
-      setErrorMessage(messageParser(e));
-    }
-  });
-
-  const handleRegister = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    RegisterAction();
-  };
+  const RegisterAction: FormEventHandler<HTMLFormElement> = useRecoilCallback(
+    ({ snapshot }) =>
+      async (event) => {
+        event.preventDefault();
+        try {
+          setLoading(true);
+          await snapshot.getPromise(Register);
+          navigate(URL_PATH.LOGIN, { replace: true });
+          setLoading(false);
+        } catch (e) {
+          setLoading(false);
+          setErrorMessage(messageParser(e));
+        }
+      },
+  );
 
   useEffect(() => {
     setTimeout(() => {
       setErrorMessage("");
-    }, 5000);
+    }, 3000);
   });
 
   return (
-    <AuthLayout error={errorMessage} text="Register Your Account">
-      <Suspense fallback="Loading...">
-        <Form
-          onSubmit={(event) => handleRegister(event)}
-          className="space-y-4 md:space-y-6 flex flex-col"
-        >
+    <Suspense fallback="Loading...">
+      <AuthLayout error={errorMessage} text="Register Your Account">
+        <Form onSubmit={RegisterAction} className="space-y-4 md:space-y-6 flex flex-col">
           <RegisterTextField />
           <AuthCheckBox
             label="Agree terms and conditions"
@@ -55,11 +55,11 @@ const RegisterContent: FC = (): ReactElement => {
             url={URL_PATH.LOGIN}
             label="Already have an account?"
             subLabel="Sign In"
-            buttonLabel="Sign Up"
+            buttonLabel={loading ? "Registering..." : "Sign Up"}
           />
         </Form>
-      </Suspense>
-    </AuthLayout>
+      </AuthLayout>
+    </Suspense>
   );
 };
 

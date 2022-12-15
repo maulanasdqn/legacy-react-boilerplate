@@ -1,14 +1,8 @@
-import CheckBox from "@components/Common/CheckBox";
-import { ChangeEventHandler, FC, ReactElement } from "react";
+import { FC, lazy, ReactElement, Suspense } from "react";
 import { Link } from "react-router-dom";
+import type { AuthCheckBoxType } from "@util/types/Auth";
 
-type AuthCheckBoxType = {
-  label: string;
-  subLabel: string;
-  value: string;
-  required?: boolean;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
+const CheckBox = lazy(() => import("@components/Common/CheckBox"));
 
 const AuthCheckBox: FC<AuthCheckBoxType> = ({
   label,
@@ -18,22 +12,24 @@ const AuthCheckBox: FC<AuthCheckBoxType> = ({
   required = true,
 }): ReactElement => {
   return (
-    <div className="flex items-center justify-between">
-      <CheckBox
-        type="checkbox"
-        name={""}
-        label={label}
-        value={value}
-        onChange={onChange}
-        required={required}
-      />
-      <Link
-        to="#"
-        className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-      >
-        {subLabel}
-      </Link>
-    </div>
+    <Suspense fallback={"Memuat Checkbox..."}>
+      <div className="flex items-center justify-between">
+        <CheckBox
+          type="checkbox"
+          name={""}
+          label={label}
+          value={value}
+          onChange={onChange}
+          required={required}
+        />
+        <Link
+          to="#"
+          className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+        >
+          {subLabel}
+        </Link>
+      </div>
+    </Suspense>
   );
 };
 

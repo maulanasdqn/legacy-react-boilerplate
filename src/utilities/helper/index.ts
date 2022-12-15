@@ -24,7 +24,7 @@ const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
 
 export const getErrorMessage = (error: unknown): string => toErrorWithMessage(error).message;
 
-export const messageParser = (error: unknown): string => JSON.parse(`${error}`);
+export const messageParser = (error: unknown): string => `${error}`;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const handleError = (error: any): ErrorComplete => error.response.data;

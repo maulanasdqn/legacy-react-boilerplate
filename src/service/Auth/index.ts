@@ -27,24 +27,11 @@ const AuthService = {
     }
   },
 
-  Logout: async () => {
-    const requestData = {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      data: {},
-      url: "/auth/logout",
-    };
-    try {
-      await ApiService.customRequest(requestData);
-      ApiService.removeHeader();
-      TokenService.removeToken();
-      TokenService.removeRefreshToken();
-      window.location.reload();
-    } catch (error) {
-      throw getErrorMessage(error);
-    }
+  Logout: () => {
+    ApiService.removeHeader();
+    TokenService.removeToken();
+    TokenService.removeRefreshToken();
+    window.location.reload();
   },
 
   Register: async (payload: AuthPayloadTypes) => {
@@ -60,6 +47,26 @@ const AuthService = {
       await ApiService.customRequest(requestData);
     } catch (error) {
       throw handleError(error);
+    }
+  },
+
+  RefreshToken: async () => {
+    const requestData = {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        refresh_token: TokenService.getRefreshToken(),
+      },
+      url: "/auth/refresh",
+    };
+    try {
+      const response = await ApiService.customRequest(requestData);
+      ApiService.setHeader();
+      return response.data;
+    } catch (error) {
+      throw getErrorMessage(error);
     }
   },
 };

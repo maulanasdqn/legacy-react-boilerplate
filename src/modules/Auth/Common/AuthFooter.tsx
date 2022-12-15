@@ -1,12 +1,6 @@
 import { FC, ReactElement, Fragment } from "react";
 import { Link } from "react-router-dom";
-
-type AuthFooterType = {
-  label: string;
-  subLabel: string;
-  buttonLabel: string;
-  url: string;
-};
+import type { AuthFooterType } from "@util/types/Auth";
 
 const AuthFooter: FC<AuthFooterType> = ({ url, label, subLabel, buttonLabel }): ReactElement => {
   return (
@@ -17,7 +11,7 @@ const AuthFooter: FC<AuthFooterType> = ({ url, label, subLabel, buttonLabel }): 
       >
         {buttonLabel}
       </button>
-      <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+      <span className="text-sm font-light text-gray-500 dark:text-gray-400">
         {label}
         <Link
           to={url}
@@ -25,7 +19,7 @@ const AuthFooter: FC<AuthFooterType> = ({ url, label, subLabel, buttonLabel }): 
         >
           {subLabel}
         </Link>
-      </p>
+      </span>
     </Fragment>
   );
 };

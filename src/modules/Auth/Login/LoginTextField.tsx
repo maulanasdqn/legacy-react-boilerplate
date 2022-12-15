@@ -1,22 +1,20 @@
-import { FC, ReactElement, ChangeEvent } from "react";
+import { FC, ReactElement, ChangeEvent, Suspense, lazy } from "react";
 import { useRecoilState } from "recoil";
 import { AuthPayload } from "@store/Auth/Common/atoms";
-import TextField from "@components/Common/TextField";
+
+const TextField = lazy(() => import("@components/Common/TextField"));
 
 const LoginTextField: FC = (): ReactElement => {
   const [payload, setPayload] = useRecoilState(AuthPayload);
-
-  const className =
-    "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   const InputFields = [
     {
       type: "email",
       label: "Email",
-      labelClassName: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
+      labelClassName: "input-label-auth",
       name: "email",
       id: "email",
-      className,
+      className: "input-auth",
       placeholder: "maulana@psu.org",
       required: true,
       value: payload["email"],
@@ -25,10 +23,10 @@ const LoginTextField: FC = (): ReactElement => {
     {
       type: "password",
       label: "Password",
-      labelClassName: "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
+      labelClassName: "input-label-auth",
       name: "password",
       id: "password",
-      className,
+      className: "input-auth",
       placeholder: "*************",
       required: true,
       value: payload["password"],
@@ -40,11 +38,11 @@ const LoginTextField: FC = (): ReactElement => {
   };
 
   return (
-    <>
+    <Suspense fallback={"Memuat Form..."}>
       {InputFields.map((field, index) => (
         <TextField {...field} key={index} onChange={onChange} />
       ))}
-    </>
+    </Suspense>
   );
 };
 
