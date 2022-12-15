@@ -1,7 +1,9 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Login from "@views/Auth/Login";
-import Home from "@views/home";
-import Register from "@views/Auth/Register";
+
+const Home = lazy(() => import("@views/home"))
+const Register = lazy(() => import("@views/Auth/Register"))
+const Login = lazy(() => import("@views/Auth/Login"))
 
 const Router = createBrowserRouter([
   {
